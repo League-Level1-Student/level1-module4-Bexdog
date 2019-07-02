@@ -82,7 +82,6 @@ public class SimonSays extends KeyAdapter {
 		frame.setVisible(true);
 		// 7. Uncomment the following line to add a random image to your frame
 		frame.add(getNextRandomImage());
-
 		// 8. Set the name of your frame
 		frame.setName("This is the Game of 'Simon Says'");
 		// 9. Pack the frame
@@ -93,14 +92,17 @@ public class SimonSays extends KeyAdapter {
 		// 11. Add a key listener to the frame
 		frame.addKeyListener(this);
 		// 12. Create a new instance of Random
-//		Random Bb = new Random();
-//				Bb.nextInt(5);
-//		int bob = Integer.parseInt(Bb);
+		Random Bb = new Random();	
+		int bob = Bb.nextInt(2);;
 		// 13. Use the Random and the speak method to either say
 		// "Simon says press this key" or "Press this key"
-
+		if(bob == 1){
+			speak("Simon says press this key");
+		}
+		else {
+			speak("Press this key");
+		}
 		// 14. Above, set the value of simonSays to true/false appropriately
-
 	}
 
 	private Component getNextRandomImage() {
