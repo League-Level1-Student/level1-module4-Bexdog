@@ -35,9 +35,13 @@ public class SimonSays extends KeyAdapter {
 		// 2. Add the four images that match keyboard keys like this:
 		// images.put(new Integer(KeyEvent.VK_UP), "up.jpg");
 		images.put(new Integer(KeyEvent.VK_UP), "up.jpg");
-		images.put(new Integer(KeyEvent.VK_UP), "down.jpg");
-		images.put(new Integer(KeyEvent.VK_UP), "left.jpg");
-		images.put(new Integer(KeyEvent.VK_UP), "right.jpg");
+		System.out.println((KeyEvent.VK_UP)+" up");
+		images.put(new Integer(KeyEvent.VK_DOWN), "down.jpg");
+		System.out.println((KeyEvent.VK_DOWN)+" down");
+		images.put(new Integer(KeyEvent.VK_LEFT), "left.jpg");
+		System.out.println((KeyEvent.VK_LEFT)+" left");
+		images.put(new Integer(KeyEvent.VK_RIGHT), "right.jpg");
+		System.out.println((KeyEvent.VK_RIGHT)+" right");
 		// 3. Use a JOptionPane to tell the user the rules: "Press the matching
 		// key when
 		// 'Simon says' otherwise press a different key"
@@ -48,9 +52,29 @@ public class SimonSays extends KeyAdapter {
 
 	public void keyPressed(KeyEvent e) {
 		// 15. Make a points variable to track the score.
-
+		int points = 0;
 		// 16. If the keyCode matches the imageIndex and "Simon says"
-
+		if(((e.getKeyCode()==imageIndex)&&simonSays)) {
+			points++;
+			speak("Correct");
+			showImage();
+		}
+		else if((e.getKeyCode()!=imageIndex)&&!simonSays) {
+			points++;
+			speak("Correct, Simon didn't say");
+			tries++;		
+			showImage();
+		}
+		else {
+			points--;
+			speak("incorrect");
+			showImage();
+		}
+		if(tries>9) {
+			JOptionPane.showMessageDialog(null, "Your score is "+points);;
+			frame.dispose();
+			System.exit(0);
+		}
 		// 17. Increase the value of score
 
 		// 18. Use the speak method to tell the user they were correct
@@ -98,15 +122,19 @@ public class SimonSays extends KeyAdapter {
 		// "Simon says press this key" or "Press this key"
 		if(bob == 1){
 			speak("Simon says press this key");
+			simonSays=true;
 		}
 		else {
 			speak("Press this key");
+			simonSays=false;
 		}
 		// 14. Above, set the value of simonSays to true/false appropriately
 	}
 
 	private Component getNextRandomImage() {
-		this.imageIndex = new Random().nextInt(4) + 37;
+		this.imageIndex = new Random().nextInt(4)+37;
+		System.out.println(this.imageIndex + " image index");
+		System.out.println(images.get(imageIndex));
 		return loadImage(images.get(imageIndex));
 	}
 
@@ -118,7 +146,8 @@ public class SimonSays extends KeyAdapter {
 
 	void speak(String words) {
 		try {
-			Runtime.getRuntime().exec("say " + words).waitFor();
+			System.out.println(words);
+			//Runtime.getRuntime().exec("say " + words).waitFor();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
