@@ -13,7 +13,8 @@ public class SlotMachine {
 	JPanel panel = new JPanel();
 	JButton button = new JButton();
 public static void main(String[] args) {
-	
+	SlotMachine slots = new SlotMachine();
+	slots.run();
 }
 void run() {
 	button.setText("SPIN!");
